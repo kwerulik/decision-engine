@@ -11,18 +11,18 @@ document.getElementById('loanForm').addEventListener('submit', async function (e
     const offerDetails = document.getElementById('offerDetails');
 
     const payload = {
-        personalCode: personalCode,
-        loanAmount: loanAmount,
-        loanPeriod: loanPeriod
+      personal_code: personalCode,
+      loan_amount: loanAmount,
+      loan_period: loanPeriod,
     };
 
     try {
-        const response = await fetch('http://127.0.0.1:8000/api/decision', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
+        const response = await fetch("http://127.0.0.1:8000/api/decision", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
         });
 
         const data = await response.json();
@@ -30,7 +30,7 @@ document.getElementById('loanForm').addEventListener('submit', async function (e
         resultContainer.classList.remove('hidden');
 
         if (response.ok) {
-            decisionMessage.textContent = 'data.message';
+            decisionMessage.textContent = data.message;
 
             if (data.approved){
                 decisionTitle.textContent = 'Decosopm: Approved';
@@ -45,10 +45,18 @@ document.getElementById('loanForm').addEventListener('submit', async function (e
                 offerDetails.classList.add('hidden');
             }
         } else {
-            decisionTitle.textContent = 'Error';
-            decisionTitle.style.color = 'red';
-            decisionMessage.textContent = data.detail || 'An error occurred while processing your request.';
-            offerDetails.classList.add('hidden');
+            decisionTitle.textContent = "Error";
+            decisionTitle.style.color = "red";
+
+            if (Array.isArray(data.detail)) {
+              decisionMessage.textContent =
+                "Validation Error: Please check your inputs.";
+            } else {
+              decisionMessage.textContent =
+                data.detail ||
+                "An error occurred while processing your request.";
+            }
+            offerDetails.classList.add("hidden");
         } 
     }catch (error) {
             console.error('Error:', error);

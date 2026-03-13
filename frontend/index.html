@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decision Engine</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Loan Aplication</h1>
+        <form id="loanForm">
+            <div class="form-group">
+                <label for="personalCode">Personal Code:</label>
+                <input type="text" id="personalCode" name="personalCode" placeholder="e.g. 49002010987" required>
+            </div>
+
+            <div class="form-group">
+                <label for="loanAmount">Requested Amount (€):</label>
+                <input type="number" id="loanAmount" name="loanAmount" min="2000" max="10000" value="4000" required>
+            </div>
+
+            <div class="form-group">
+                <label for="loanPeriod">Requested Period (Months):</label>
+                <input type="number" id="loanPeriod" name="loanPeriod" min="12" max="60" value="12" required>
+            </div>
+
+            <button type="submit">Get Decision</button>
+        </form>
+
+        <div id="resultContainer" class="hidden">
+            <h2 id="decisionTitle"></h2>
+            <p id="decisionMessage"></p>
+            <div id="offerDetails" class="hidden">
+                <p><strong>Approved Amount:</strong> <span id="resAmount"></span> €</p>
+                <p><strong>Approved Period:</strong> <span id="resPeriod"></span> months</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

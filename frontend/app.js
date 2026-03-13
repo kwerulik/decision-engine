@@ -10,7 +10,7 @@ document.getElementById('loanForm').addEventListener('submit', async function (e
     const decisionMessage = document.getElementById('decisionMessage');
     const offerDetails = document.getElementById('offerDetails');
 
-    cosnt payload = {
+    const payload = {
         personalCode: personalCode,
         loanAmount: loanAmount,
         loanPeriod: loanPeriod

@@ -36,10 +36,9 @@ class LoanResponse(BaseModel):
     period: int | None = None
     message: str
 
-@app.post("/api/decision", response_model=LoanResponse)
-def make_decision(application: LoanApplication):
+
+def process_loan_application(application) -> LoanResponse:
     '''
-        Main endpoint for loan decisions.
         Checks for debt, calculates the max possible amount, and tries to find 
         a longer period if the initial amount is below the 2000 minimum.
     '''
@@ -61,11 +60,9 @@ def make_decision(application: LoanApplication):
         return mod * period
     
     max_possible_amount = calc_max_amount(modifier, application.loan_period)
-
     approved_amount = min(max_possible_amount, MAX_AMOUNT)
 
     if approved_amount >= MIN_AMOUNT:
-        
         return LoanResponse(
             approved=True,
             amount=approved_amount,
@@ -87,3 +84,10 @@ def make_decision(application: LoanApplication):
         approved=False,
         message="Application rejected: Credit score too low even for the maximum period."
     )
+
+@app.post("/api/decision", response_model=LoanResponse)
+def make_decision(application: LoanApplication):
+    '''
+    Main endpoint for loan decisions.
+    '''
+    return process_loan_application(application)

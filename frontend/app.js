@@ -33,7 +33,7 @@ document.getElementById('loanForm').addEventListener('submit', async function (e
             decisionMessage.textContent = data.message;
 
             if (data.approved){
-                decisionTitle.textContent = 'Decosopm: Approved';
+                decisionTitle.textContent = "Decision: Approved";
                 decisionTitle.style.color = 'green';
                 offerDetails.classList.remove('hidden');
                 document.getElementById('resAmount').textContent = data.amount;

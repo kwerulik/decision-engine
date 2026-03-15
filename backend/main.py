@@ -83,6 +83,7 @@ def make_decision(application: LoanApplication):
                 period=new_period,
                 message="Requested period too short for minimum loan amount. Adjusted to a new suitable period"
             )
+        
     return LoanResponse(
         approved=False,
         message="Application rejected: Credit score too low even for the maximum period."

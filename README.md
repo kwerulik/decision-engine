@@ -1,5 +1,7 @@
 # Decision Engine – Inbank
 
+This project implements a simple loan decision engine based on the credit scoring algorithm described in the assignment.
+
 # Project Structure
 
 ```
@@ -56,6 +58,20 @@ max_amount = credit_modifier * loan_period
 If the calculated amount is below the minimum allowed loan (2000€), the system tries to find a **longer loan period** that satisfies the condition.
 
 If no valid combination exists within the allowed limits, the application is rejected.
+
+---
+# Mocked Registry Data
+
+For simplicity, the external registry is mocked with hardcoded data:
+
+| Personal Code | Scenario | Credit Modifier |
+|---------------|----------|----------------|
+| 49002010965 | User with debt | - |
+| 49002010976 | Segment 1 | 100 |
+| 49002010987 | Segment 2 | 300 |
+| 49002010998 | Segment 3 | 1000 |
+
+If a user has debt, the loan is automatically rejected.
 
 ---
 
@@ -136,4 +152,11 @@ Tests verify several scenarios:
 
 ---
 
+# Feedback on the Assignment
+
+One thing I would improve in the assignment is how the requested loan amount is used.
+
+Currently, the decision engine always returns the maximum possible amount based on the credit modifier and loan period, regardless of the amount requested by the user.
+
+In a real-world system, the requested amount would likely influence the decision process. For example, the system could first check whether the requested amount can be approved and only return the maximum possible amount if the requested one is too high.
 

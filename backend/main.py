@@ -37,7 +37,7 @@ class LoanResponse(BaseModel):
     message: str
 
 
-def process_loan_application(application) -> LoanResponse:
+def process_loan_application(application:LoanApplication) -> LoanResponse:
     '''
         Checks for debt, calculates the max possible amount, and tries to find 
         a longer period if the initial amount is below the 2000 minimum.

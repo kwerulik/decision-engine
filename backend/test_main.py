@@ -15,7 +15,7 @@ def test_user_with_debt():
     assert response.status_code == 200
     data = response.json()
     assert data["approved"] == False
-    assert'debt' in data["message"].lower()
+    assert 'debt' in data["message"].lower()
 
 
 def test_user_finding_new_period():

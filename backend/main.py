@@ -25,8 +25,6 @@ MOCK_REGISTRY = {
     "49002010998": {"debt": False, "modifier": 1000},
 }
 
-
-# Pydantic models for request and response
 class LoanApplication(BaseModel):
     loan_amount: int = Field(ge=MIN_AMOUNT, le=MAX_AMOUNT)
     loan_period: int = Field(ge=MIN_PERIOD, le=MAX_PERIOD)
@@ -41,9 +39,9 @@ class LoanResponse(BaseModel):
 @app.post("/api/decision", response_model=LoanResponse)
 def make_decision(application: LoanApplication):
     '''
-        cred_score < 1 ==> not approved
-        cred_score >= 1
-
+        Main endpoint for loan decisions.
+        Checks for debt, calculates the max possible amount, and tries to find 
+        a longer period if the initial amount is below the 2000 minimum.
     '''
     user_data = MOCK_REGISTRY.get(application.personal_code)
 
@@ -59,6 +57,7 @@ def make_decision(application: LoanApplication):
     modifier = user_data["modifier"]
 
     def calc_max_amount(mod: int, period: int) -> int:
+        ''' Calculates the maximum loan amount based on the modifier and period.'''
         return mod * period
     
     max_possible_amount = calc_max_amount(modifier, application.loan_period)
